@@ -1,1 +1,1 @@
-::: mcpgateway_client.foo
+::: mcpgateway_client.cli
