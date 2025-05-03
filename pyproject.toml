@@ -17,6 +17,9 @@ classifiers = [
     "Programming Language :: Python :: 3.13",
     "Topic :: Software Development :: Libraries :: Python Modules",
 ]
+dependencies = [
+    "typer>=0.15.3",
+]
 
 [project.urls]
 Homepage = "https://snapby.github.io/mcpgateway-client/"
@@ -35,6 +38,7 @@ dev = [
     "mkdocs>=1.4.2",
     "mkdocs-material>=8.5.10",
     "mkdocstrings[python]>=0.26.1",
+    "mcpgateway-client",
 ]
 
 [build-system]
@@ -113,3 +117,12 @@ skip_empty = true
 [tool.coverage.run]
 branch = true
 source = ["src"]
+
+[tool.uv.sources]
+mcpgateway-client = { workspace = true }
+
+[project.scripts]
+mcpgateway_client = "mcpgateway_client.__main__:main"
+
+[tool.deptry.per_rule_ignores]
+DEP003 = ["rich"]
