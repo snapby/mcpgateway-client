@@ -1,0 +1,52 @@
+site_name: mcpgateway-client
+repo_url: https://github.com/snapby/mcpgateway-client
+site_url: https://snapby.github.io/mcpgateway-client
+site_description: A lightweight SnapEnv McpGateway client for SnapEnv McpGateway server, enabling AI Agents access to MCP server's running on local computer.
+site_author: Abner G Jacobsen
+edit_uri: edit/main/docs/
+repo_name: snapby/mcpgateway-client
+copyright: Maintained by <a href="https://snapby.com">snapby</a>.
+
+nav:
+  - Home: index.md
+  - Modules: modules.md
+plugins:
+  - search
+  - mkdocstrings:
+      handlers:
+        python:
+          paths: ["src/mcpgateway_client"]
+theme:
+  name: material
+  feature:
+    tabs: true
+  palette:
+    - media: "(prefers-color-scheme: light)"
+      scheme: default
+      primary: white
+      accent: deep orange
+      toggle:
+        icon: material/brightness-7
+        name: Switch to dark mode
+    - media: "(prefers-color-scheme: dark)"
+      scheme: slate
+      primary: black
+      accent: deep orange
+      toggle:
+        icon: material/brightness-4
+        name: Switch to light mode
+  icon:
+    repo: fontawesome/brands/github
+
+extra:
+  social:
+    - icon: fontawesome/brands/github
+      link: https://github.com/snapby/mcpgateway-client
+    - icon: fontawesome/brands/python
+      link: https://pypi.org/project/mcpgateway-client
+
+markdown_extensions:
+  - toc:
+      permalink: true
+  - pymdownx.arithmatex:
+      generic: true
