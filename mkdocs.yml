@@ -9,7 +9,8 @@ copyright: Maintained by <a href="https://snapby.com">snapby</a>.
 
 nav:
   - Home: index.md
-  - Modules: modules.md
+  - Modules:
+    - cli: modules/cli.md
 plugins:
   - search
   - mkdocstrings:

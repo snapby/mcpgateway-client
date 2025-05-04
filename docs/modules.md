@@ -1,1 +1,0 @@
-::: mcpgateway_client.cli
