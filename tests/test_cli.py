@@ -19,32 +19,55 @@ def test_foo_ok():
     assert "param2=arg2" in output
 
 
-def test_bar_missing_args():
-    result = runner.invoke(app, ["bar", "alpha", "beta"])
+def test_register_missing_args():
+    result = runner.invoke(app, ["register", "alpha", "beta"])
     output = strip_ansi(result.output.lower())
     assert result.exit_code != 0
-    # assert "--host" in result.output.lower()
-    assert "--host" in output
+    assert "--gateway-url" in output
 
 
-def test_bar_ok_with_host():
-    result = runner.invoke(app, ["bar", "alpha", "beta", "--host", "http://localhost"])
+def test_register_ok_with_host():
+    result = runner.invoke(
+        app,
+        [
+            "register",
+            "--gateway-url",
+            "ws://localhost:8765/mcp/register",
+            "--stdio",
+            "npx -y @modelcontextprotocol/server-filesystem ./",
+            "--server-name",
+            "local-mcpserver-001",
+        ],
+    )
     output = strip_ansi(result.output.lower())
     assert result.exit_code == 0
-    assert "host: http://localhost" in output
+    assert "host: ws://localhost:8765/mcp/register" in output
 
 
-def test_bar_with_apikey():
-    result = runner.invoke(app, ["bar", "a", "b", "--host", "http://x", "--apikey", "XYZ"])
+def test_register_with_apikey():
+    result = runner.invoke(
+        app,
+        [
+            "register",
+            "--gateway-url",
+            "ws://localhost:8765/mcp/register",
+            "--auth-token",
+            "Bearer abcdef123456",
+            "--stdio",
+            "npx -y @modelcontextprotocol/server-filesystem ./",
+            "--server-name",
+            "local-mcpserver-001",
+        ],
+    )
     output = strip_ansi(result.output.lower())
     assert result.exit_code == 0
-    assert "api key: xyz" in output
+    assert "api key: bearer abcdef123456" in output
 
 
-def test_bar_help():
-    result = runner.invoke(app, ["bar", "--help"])
-    output = strip_ansi(result.output.lower())
+def test_register_help():
+    result = runner.invoke(app, ["register", "--help"])
+    output = strip_ansi(result.output)
     assert result.exit_code == 0
-    assert "executa o comando bar" in output
-    assert "--host" in output
-    assert "--apikey" in output
+    assert "Register your MCP Server to the Gateway" in output
+    assert "--gateway-url" in output
+    assert "--auth-token" in output
