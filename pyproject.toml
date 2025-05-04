@@ -1,6 +1,6 @@
 [project]
 name = "mcpgateway-client"
-version = "0.0.1"
+version = "0.1.2"
 description = "A lightweight SnapEnv McpGateway client for SnapEnv McpGateway server, enabling AI Agents access to MCP server's running on local computer."
 authors = [{ name = "Abner G Jacobsen", email = "admin@h100.com.br" }]
 readme = "README.md"
