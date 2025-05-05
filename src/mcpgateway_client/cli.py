@@ -5,6 +5,7 @@ from rich.console import Console
 from rich.panel import Panel
 from rich.tree import Tree
 
+from mcpgateway_client.client_websocket import main as client_main
 from mcpgateway_client.types import StdioToWsArgs
 from mcpgateway_client.utils import setup_logger
 
@@ -27,6 +28,12 @@ LOG_LEVEL = typer.Option(
     "--log-level",
     "-l",
     help="Logging level",
+)
+DRY_RUN = typer.Option(
+    False,
+    "--dry-run",
+    "-d",
+    help="Dry run mode, use only to test parameters and options",
 )
 
 app = typer.Typer(
@@ -130,6 +137,7 @@ def register(
     ),
     header: list[str] = HEADER_OPTION,
     log_level: str = LOG_LEVEL,
+    dry_run: bool = DRY_RUN,
 ) -> None:
     """
     Executes the REGISTER command with required and optional parameters.
@@ -201,4 +209,5 @@ def register(
 
     console.print(Panel(tree, title="Client Register", border_style="magenta", expand=True))
 
-    # client_main(ws_args)
+    if not dry_run:
+        client_main(ws_args)
