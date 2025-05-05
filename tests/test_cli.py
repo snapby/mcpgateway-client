@@ -20,7 +20,7 @@ def test_foo_ok():
 
 
 def test_register_missing_args():
-    result = runner.invoke(app, ["register", "alpha", "beta"])
+    result = runner.invoke(app, ["register", "alpha", "beta", "--dry-run"])
     output = strip_ansi(result.output.lower())
     assert result.exit_code != 0
     assert "--gateway-url" in output
@@ -37,6 +37,7 @@ def test_register_ok_with_host():
             "npx -y @modelcontextprotocol/server-filesystem ./",
             "--server-name",
             "local-mcpserver-001",
+            "--dry-run",
         ],
     )
     output = strip_ansi(result.output.lower())
@@ -57,6 +58,7 @@ def test_register_with_apikey():
             "npx -y @modelcontextprotocol/server-filesystem ./",
             "--server-name",
             "local-mcpserver-001",
+            "--dry-run",
         ],
     )
     output = strip_ansi(result.output.lower())
