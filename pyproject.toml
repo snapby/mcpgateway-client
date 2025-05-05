@@ -5,7 +5,7 @@ description = "A lightweight SnapEnv McpGateway client for SnapEnv McpGateway se
 authors = [{ name = "Abner G Jacobsen", email = "admin@h100.com.br" }]
 readme = "README.md"
 keywords = ['python']
-requires-python = ">=3.9,<4.0"
+requires-python = ">=3.11,<4.0"
 classifiers = [
     "Intended Audience :: Developers",
     "Programming Language :: Python",
