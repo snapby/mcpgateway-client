@@ -19,6 +19,7 @@ classifiers = [
 ]
 dependencies = [
     "typer>=0.15.3",
+    "websockets>=15.0.1",
 ]
 
 [project.urls]
