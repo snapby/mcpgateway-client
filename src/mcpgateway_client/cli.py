@@ -3,6 +3,10 @@ import importlib.metadata
 import typer
 from rich.console import Console
 from rich.panel import Panel
+from rich.tree import Tree
+
+from mcpgateway_client.types import StdioToWsArgs
+from mcpgateway_client.utils import setup_logger
 
 console = Console()
 
@@ -17,6 +21,12 @@ HEADER_OPTION = typer.Option(
     "-h",
     help="Add one or more headers (format: 'Key: Value'). Can be used multiple times. Ex: -h 'Authorization: Bearer token'",
     # multiple=True,
+)
+LOG_LEVEL = typer.Option(
+    "INFO",
+    "--log-level",
+    "-l",
+    help="Logging level",
 )
 
 app = typer.Typer(
@@ -119,6 +129,7 @@ def register(
         help="Server name for registration. Ex: local-mcpserver-001",
     ),
     header: list[str] = HEADER_OPTION,
+    log_level: str = LOG_LEVEL,
 ) -> None:
     """
     Executes the REGISTER command with required and optional parameters.
@@ -143,15 +154,51 @@ def register(
     Returns:
         None: Esta função não retorna valor.
     """
-    typer.echo("Executando REGISTER:\n")
-    typer.echo(f"Host: {gateway_url}")
-    if gateway_auth_token:
-        typer.echo(f"API Key: {gateway_auth_token}")
-    else:
-        typer.echo("Nenhuma API Key fornecida.")
+    setup_logger(level=log_level)
+    headers = {}
     if header:
-        typer.echo("Headers fornecidos:")
-        for h in header:
-            typer.echo(f"- {h}")
-    else:
-        typer.echo("Nenhum header fornecido.")
+        for item in header:
+            if ":" not in item:
+                msg = f"Invalid header: '{item}'."
+                raise ValueError(msg)
+            key, value = item.split(":", 1)
+            headers[key.strip()] = value.strip()
+
+    ws_args = StdioToWsArgs(
+        gateway_url=gateway_url,
+        gateway_auth_token=gateway_auth_token,
+        # port=args.port,
+        # enable_cors=args.enable_cors,
+        # health_endpoints=args.health_endpoint,
+        server_name=server_name,
+        # server_id=args.server_id,
+        # require_gateway=args.require_gateway,
+        headers=headers,
+        stdio_cmd=stdio,
+        # ssl_verify=args.ssl_verify,
+        # ssl_ca_cert=args.ssl_ca_cert,
+        log_level=log_level,
+    )
+
+    # config_panel = Panel(
+    #     Pretty(ws_args.__dict__, expand_all=True),
+    #     title="📦 Client Register Settings",
+    #     # subtitle="Objeto Python formatado",
+    #     border_style="cyan",
+    #     expand=True,
+    # )
+    # console.print(config_panel)
+
+    tree = Tree("📦 [bold cyan]Settings[/]")
+
+    for key, value in ws_args.__dict__.items():
+        if isinstance(value, dict):
+            branch = tree.add(f"[bold yellow]{key}[/]:")
+            for sub_key, sub_value in value.items():
+                branch.add(f"[green]{sub_key}[/]: {sub_value}")
+        else:
+            tree.add(f"[bold yellow]{key}[/]: {value}")
+
+    console.print(Panel(tree, title="Client Register", border_style="magenta", expand=True))
+
+    # client_main(ws_args)
