@@ -41,7 +41,7 @@ def test_register_ok_with_host():
     )
     output = strip_ansi(result.output.lower())
     assert result.exit_code == 0
-    assert "host: ws://localhost:8765/mcp/register" in output
+    assert "gateway_url: ws://localhost:8765/mcp/register" in output
 
 
 def test_register_with_apikey():
@@ -61,7 +61,7 @@ def test_register_with_apikey():
     )
     output = strip_ansi(result.output.lower())
     assert result.exit_code == 0
-    assert "api key: bearer abcdef123456" in output
+    assert "gateway_auth_token: bearer abcdef123456" in output
 
 
 def test_register_help():
