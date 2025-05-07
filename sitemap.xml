@@ -1,0 +1,15 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<urlset xmlns="http://www.sitemaps.org/schemas/sitemap/0.9">
+    <url>
+         <loc>https://snapby.github.io/mcpgateway-client/</loc>
+         <lastmod>2025-05-07</lastmod>
+    </url>
+    <url>
+         <loc>https://snapby.github.io/mcpgateway-client/modules/cli/</loc>
+         <lastmod>2025-05-07</lastmod>
+    </url>
+    <url>
+         <loc>https://snapby.github.io/mcpgateway-client/modules/client_websocket/</loc>
+         <lastmod>2025-05-07</lastmod>
+    </url>
+</urlset>
